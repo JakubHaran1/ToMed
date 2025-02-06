@@ -13,14 +13,12 @@
   font-family: "Roboto", serif;
 }
 
-html {
-  overflow: hidden;
-}
-body {
+.page-wrapper {
   position: relative;
   z-index: 0;
   overflow-x: hidden;
   min-height: 100vh;
+  background-color: var(--light-grey);
 }
 
 nav {
@@ -30,13 +28,16 @@ nav {
 
 .nav-desktop,
 .side,
-.about-us {
+.about-us,
+.examinations-view {
   display: none;
 }
+
 .nav-mobile {
   display: flex;
   justify-content: space-between;
 }
+
 .nav {
   padding: 1rem;
   align-items: center;
@@ -74,11 +75,11 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 100vh;
   gap: 0.25rem;
   width: 100%;
   position: absolute;
   top: 0;
-  bottom: 0;
   z-index: 100000;
   left: 100%;
   padding: 1rem;
@@ -91,16 +92,25 @@ nav {
   display: none;
   background-color: #35343292;
   opacity: 0;
+  cursor: pointer;
 }
+
 .close {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .side .nav-item {
   color: var(--black);
   text-decoration: none;
   margin-bottom: 0.5rem;
+}
+
+.section-header {
+  margin: 2rem 0;
+  text-align: center;
+  color: var(--black);
 }
 
 .main {
@@ -118,18 +128,18 @@ nav {
 }
 
 .typing-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #353432a3;
   z-index: 1;
   color: var(--grey);
 }
 
 .typing-wrapper h2 {
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  margin-bottom: 1rem;
 }
 
 .main .bgc {
@@ -140,6 +150,97 @@ nav {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.adventages {
+  margin: 3rem 0;
+}
+
+.adventage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 2rem auto;
+  padding: 1rem;
+  gap: 1rem;
+  border-radius: 15px;
+  background-color: #353432;
+  color: var(--grey);
+  text-align: center;
+}
+.adventage-txt {
+  width: 100%;
+}
+
+.adventage-txt h3,
+.adventage-txt {
+  margin-bottom: 1rem;
+}
+.adventage img {
+  width: 15rem;
+  border-radius: 15px;
+  margin: 0 auto;
+}
+
+.examinations {
+  position: relative;
+  padding: 2rem 1rem;
+  background-color: var(--black);
+}
+
+.examinations-scroll {
+  width: 20rem;
+  max-height: 400px;
+  overflow-y: scroll;
+  margin: 0 auto;
+  border-radius: 15px;
+}
+
+.scroll-el {
+  padding: 1rem;
+  background-color: var(--grey);
+}
+
+.scroll-el:nth-child(even) {
+  background-color: #989b9e;
+}
+.scroll-el:hover {
+  background-color: #989b9e;
+}
+
+.scroll-el:nth-child(even):hover {
+  background-color: var(--grey);
+}
+
+.examination-pop-up {
+  display: none;
+  width: 20rem;
+  min-height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background-color: var(--light-grey);
+  border-top: 10px solid var(--blue);
+  border-radius: 15px;
+  padding: 1.3rem;
+}
+
+.pop-up-close {
+  text-align: end;
+}
+.pop-up-close .close {
+  margin-bottom: 0;
+}
+
+.pop-up-header hr,
+.pop-up-header h3 {
+  margin: 0.5rem 0;
+}
+
+.examinations-view {
+  display: none;
 }
 
 @media (min-width: 724px) {
@@ -152,6 +253,39 @@ nav {
   }
   .nav-mobile {
     display: none;
+  }
+
+  .adventage {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    text-align: start;
+  }
+
+  .adventage:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+
+  .examinations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .examinations-scroll {
+    grid-column: 1/2;
+    justify-self: end;
+    margin: 0;
+  }
+
+  .examinations-view {
+    display: block;
+    grid-column: 2/3;
+    width: 20rem;
+    height: 100%;
+    background-color: var(--light-grey);
+    border-radius: 15px;
+    justify-self: start;
   }
 }
 
@@ -173,12 +307,21 @@ nav {
   .main .bgc {
     position: static;
   }
+  .typing-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   .typing-wrapper {
     align-items: start;
     margin: 0 2rem;
   }
+
   .typing-wrapper h2 {
+    position: static;
+    transform: none;
     text-align: start;
   }
 
@@ -191,6 +334,13 @@ nav {
     -webkit-box-shadow: 0px 0px 52px -13px rgba(4, 4, 4, 1);
     -moz-box-shadow: 0px 0px 52px -13px rgba(4, 4, 4, 1);
     box-shadow: 0px 0px 52px -13px rgba(4, 4, 4, 1);
+  }
+}
+
+@media (min-width: 1500px) {
+  .examinations-scroll,
+  .examinations-view {
+    width: 30rem;
   }
 }
 
