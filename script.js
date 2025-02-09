@@ -1,10 +1,42 @@
 const burgerBtn = document.querySelector(".nav-burger");
-const navMobile = document.querySelector(".nav-mobile");
+
 const side = document.querySelector(".side");
 const bgc = document.querySelector(".bgc");
 const closeBtn = document.querySelector(".nav-close");
-const typingHeader = document.querySelector(".main h2");
+let nav = document.querySelector(".nav-desktop");
 
+const typingHeader = document.querySelector(".main h2");
+const adventages = document.querySelectorAll(".adventage");
+const sections = document.querySelectorAll(".section");
+
+const mobileQuery = window.matchMedia("(max-width:724px)");
+
+// Side
+const sideClose = () => {
+  side.classList.remove("active");
+  bgc.classList.remove("active");
+};
+
+const windowChange = (e) => {
+  if (e.matches) {
+    // Nav Mobile - burger,slider
+    nav = document.querySelector(".nav-mobile");
+    burgerBtn.addEventListener("click", () => {
+      side.classList.add("active");
+      bgc.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      sideClose();
+    });
+
+    bgc.addEventListener("click", () => {
+      sideClose();
+    });
+  }
+};
+
+// Main section
 const typing = () => {
   typingHeader.textContent = "";
   const typingTxt = "Precyzyjna diagnostyka, nowoczesna technologia.";
@@ -17,19 +49,36 @@ const typing = () => {
   });
 };
 
-burgerBtn.addEventListener("click", () => {
-  side.classList.add("active");
-  bgc.classList.add("active");
-});
+// Section move
+const moveOptions = {
+  root: null,
+  threshold: 0.2,
+};
 
-closeBtn.addEventListener("click", () => {
-  side.classList.remove("active");
-  bgc.classList.remove("active");
-});
+const moveCallback = (entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove("hidden");
+    moveObserver.unobserve(entry.target);
+  });
+};
 
-bgc.addEventListener("click", (e) => {
-  side.classList.remove("active");
-  e.target.classList.remove("active");
-});
+const moveObserver = new IntersectionObserver(moveCallback, moveOptions);
 
-typing();
+const main = function () {
+  windowChange(mobileQuery);
+  mobileQuery.addEventListener("change", windowChange);
+  typing();
+
+  adventages.forEach((adventage) => {
+    adventage.classList.add("hidden");
+    moveObserver.observe(adventage);
+  });
+
+  sections.forEach((section) => {
+    section.classList.add("hidden");
+    moveObserver.observe(section);
+  });
+};
+
+main();

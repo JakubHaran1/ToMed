@@ -16,7 +16,7 @@
 .page-wrapper {
   position: relative;
   z-index: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   min-height: 100vh;
   background-color: var(--light-grey);
 }
@@ -92,6 +92,9 @@ nav {
   display: none;
   background-color: #35343292;
   opacity: 0;
+}
+
+.nav .bgc {
   cursor: pointer;
 }
 
@@ -105,6 +108,12 @@ nav {
   color: var(--black);
   text-decoration: none;
   margin-bottom: 0.5rem;
+}
+
+.section {
+  transform: translateY(0);
+  opacity: 1;
+  transition: 0.5s;
 }
 
 .section-header {
@@ -167,7 +176,11 @@ nav {
   background-color: #353432;
   color: var(--grey);
   text-align: center;
+  transform: translateY(0);
+  opacity: 1;
+  transition: 0.5s;
 }
+
 .adventage-txt {
   width: 100%;
 }
@@ -531,11 +544,22 @@ li {
   left: 50%;
 }
 
-.bgc.active {
+.bgc.mobile.active {
   display: block;
   opacity: 1;
+  z-index: 11;
 }
 
 .nav-item.active::after {
   width: 100%;
+}
+
+.adventage.hidden {
+  transform: translateY(3rem);
+  opacity: 0;
+}
+
+.section.hidden {
+  transform: translateY(3rem);
+  opacity: 0;
 }
