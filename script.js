@@ -13,6 +13,9 @@ const adventages = document.querySelectorAll(".adventage");
 const scrollWrapper = document.querySelector(".examinations-scroll");
 let examinationContent = document.querySelector(".examinations-view p");
 
+const sliderEl = document.querySelectorAll(".slider-el");
+const references = document.querySelector(".references");
+
 const mobileQuery = window.matchMedia("(max-width:724px)");
 const dataExaminations = {
   "USG jamy brzusznej":
@@ -121,7 +124,13 @@ const moveCallback = (entries) => {
 
 const moveObserver = new IntersectionObserver(moveCallback, moveOptions);
 
+const sliderFunction = (value) => {
+  sliderEl.forEach((el, i) => {
+    el.style.transform = `translateX(${100 * (i - value)}%)`;
+  });
+};
 const main = function () {
+  let currentActive = 0;
   windowChange(mobileQuery);
   mobileQuery.addEventListener("change", windowChange);
   typing();
@@ -134,6 +143,20 @@ const main = function () {
   sections.forEach((section) => {
     section.classList.add("hidden");
     moveObserver.observe(section);
+  });
+
+  sliderFunction(currentActive);
+  references.addEventListener("click", (e) => {
+    maxLength = sliderEl.length - 1;
+    if (e.target.classList.contains("fa-arrow-right")) {
+      currentActive += 1;
+      if (currentActive > maxLength) currentActive = 0;
+      sliderFunction(currentActive);
+    } else if (e.target.classList.contains("fa-arrow-left")) {
+      currentActive -= 1;
+      if (currentActive < 0) currentActive = maxLength;
+      sliderFunction(currentActive);
+    }
   });
 };
 

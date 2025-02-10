@@ -263,14 +263,31 @@ nav {
   display: none;
 }
 .references {
-  width: 20rem;
-  margin: 2.2rem auto;
+  display: flex;
+  justify-content: center;
+
+  padding: 1rem;
+}
+
+.slider-row {
+  width: 27rem;
+  height: 20rem;
   position: relative;
+  overflow: hidden;
 }
 
 .slider-el {
-  width: 15rem;
-  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  border-radius: 15px;
+  transition: 0.5s;
+}
+.slider-content {
+  width: 100%;
+  height: 100%;
   padding: 1rem;
   border-radius: 15px;
   border-top: 10px solid var(--blue);
@@ -278,22 +295,10 @@ nav {
   -moz-box-shadow: 0px 0px 54px -36px rgba(66, 68, 90, 1);
   box-shadow: 0px 0px 54px -36px rgba(66, 68, 90, 1);
 }
-
 .references button {
   background-color: transparent;
   border: 0;
   font-size: 1.4em;
-}
-
-.previous,
-.next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.next {
-  right: 0;
 }
 
 .faq-col {
@@ -384,16 +389,11 @@ li {
   min-height: 400px;
   border-radius: 0 0 15px 15px;
 }
-
-@media (min-width: 500px) {
-  .references {
-    width: 30rem;
-  }
-  .slider-el {
-    width: 25rem;
+@media (min-width: 470px) {
+  .slider-row {
+    height: 18rem;
   }
 }
-
 @media (min-width: 724px) {
   .nav-header h1 {
     font-size: 2rem;
@@ -440,11 +440,8 @@ li {
     border-radius: 15px;
   }
 
-  .references {
-    width: 40rem;
-  }
-  .slider-el {
-    width: 30rem;
+  .slider-row {
+    height: 16rem;
   }
 
   .faq-col {
@@ -517,11 +514,12 @@ li {
     gap: 4rem;
   }
 
-  .references {
-    width: 45rem;
-  }
   .faq-col {
     width: 40rem;
+  }
+
+  .slider-row {
+    width: 35rem;
   }
 }
 
@@ -536,6 +534,10 @@ li {
   .examinations-scroll,
   .examinations-view {
     width: 30rem;
+  }
+
+  .slider-row {
+    width: 45rem;
   }
 }
 
