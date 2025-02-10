@@ -544,14 +544,19 @@ li {
   left: 50%;
 }
 
-.bgc.mobile.active {
+.bgc.active {
   display: block;
   opacity: 1;
+}
+.bgc.mobile.active {
   z-index: 11;
 }
-
 .nav-item.active::after {
   width: 100%;
+}
+
+.examination-pop-up.active {
+  display: block;
 }
 
 .adventage.hidden {
