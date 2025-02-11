@@ -16,6 +16,9 @@ let examinationContent = document.querySelector(".examinations-view p");
 const sliderEl = document.querySelectorAll(".slider-el");
 const references = document.querySelector(".references");
 
+const faqCol = document.querySelector(".faq-col");
+const faqEl = faqCol.querySelectorAll(".faq-el");
+
 const mobileQuery = window.matchMedia("(max-width:724px)");
 const dataExaminations = {
   "USG jamy brzusznej":
@@ -92,6 +95,14 @@ const windowChange = (e) => {
     });
   } else {
     scrollWrapper.addEventListener("click", examinationViewer);
+    nav.addEventListener("mouseover", (e) => {
+      if (e.target.closest(".nav-item"))
+        e.target.closest(".nav-item").style.opacity = 1;
+    });
+    nav.addEventListener("mouseout", (e) => {
+      if (e.target.closest(".nav-item"))
+        e.target.closest(".nav-item").style.opacity = 0.6;
+    });
   }
 };
 
@@ -129,11 +140,23 @@ const sliderFunction = (value) => {
     el.style.transform = `translateX(${100 * (i - value)}%)`;
   });
 };
+
+const faqFuntion = (faq, blockVal, opacityVal) => {
+  faq.style.display = blockVal;
+  setTimeout(() => {
+    faq.style.opacity = opacityVal;
+  }, 60);
+};
+
 const main = function () {
-  let currentActive = 0;
+  let currentSlider = 0;
   windowChange(mobileQuery);
   mobileQuery.addEventListener("change", windowChange);
   typing();
+  sliderFunction(currentSlider);
+  faqEl.forEach((el, i) => {
+    if (i != 0) el.classList.add("hidden");
+  });
 
   adventages.forEach((adventage) => {
     adventage.classList.add("hidden");
@@ -145,17 +168,30 @@ const main = function () {
     moveObserver.observe(section);
   });
 
-  sliderFunction(currentActive);
   references.addEventListener("click", (e) => {
     maxLength = sliderEl.length - 1;
     if (e.target.classList.contains("fa-arrow-right")) {
-      currentActive += 1;
-      if (currentActive > maxLength) currentActive = 0;
-      sliderFunction(currentActive);
+      currentSlider += 1;
+      if (currentSlider > maxLength) currentSlider = 0;
+      sliderFunction(currentSlider);
     } else if (e.target.classList.contains("fa-arrow-left")) {
-      currentActive -= 1;
-      if (currentActive < 0) currentActive = maxLength;
-      sliderFunction(currentActive);
+      currentSlider -= 1;
+      if (currentSlider < 0) currentSlider = maxLength;
+      sliderFunction(currentSlider);
+    }
+  });
+
+  faqCol.addEventListener("click", (e) => {
+    if (!e.target.closest(".faq-header")) return;
+
+    const faqContent = e.target
+      .closest(".faq-el")
+      .querySelector(".faq-content");
+
+    if (faqContent.style.display == "block") {
+      faqFuntion(faqContent, "none", "0");
+    } else {
+      faqFuntion(faqContent, "block", "1");
     }
   });
 };
