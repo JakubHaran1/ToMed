@@ -13,13 +13,16 @@ const adventages = document.querySelectorAll(".adventage");
 const scrollWrapper = document.querySelector(".examinations-scroll");
 let examinationContent = document.querySelector(".examinations-view p");
 
-const sliderEl = document.querySelectorAll(".slider-el");
 const references = document.querySelector(".references");
+const sliderRow = document.querySelector(".slider-row");
+const sliderEl = document.querySelectorAll(".slider-el");
 
 const faqCol = document.querySelector(".faq-col");
 const faqEl = faqCol.querySelectorAll(".faq-el");
 
 const mobileQuery = window.matchMedia("(max-width:724px)");
+const mobileQuerySecond = window.matchMedia("(max-width:1000px)");
+
 const dataExaminations = {
   "USG jamy brzusznej":
     "Badanie obrazowe oceniające narządy wewnętrzne, takie jak wątroba, trzustka, śledziona, nerki i pęcherzyk żółciowy. Pomaga w diagnostyce schorzeń układu pokarmowego i moczowego.",
@@ -58,11 +61,10 @@ const examinationViewer = (e) => {
     dataExaminations[`${e.target.textContent.trim()}`];
 };
 
-const windowChange = (e) => {
-  if (e.matches) {
+const windowChange = () => {
+  if (mobileQuery.matches) {
     // Nav Mobile - burger,slider
     nav = document.querySelector(".nav-mobile");
-
     const examinationSection = document.querySelector(".examinations");
     const examinationBgc = examinationSection.querySelector(".bgc");
     const popUp = examinationSection.querySelector(".examination-pop-up");
@@ -93,15 +95,17 @@ const windowChange = (e) => {
         examinationBgc.classList.remove("active");
       }
     });
-  } else {
+  } else if (!mobileQuery.matches && mobileQuerySecond.matches) {
     scrollWrapper.addEventListener("click", examinationViewer);
+  } else {
     nav.addEventListener("mouseover", (e) => {
       if (e.target.closest(".nav-item"))
         e.target.closest(".nav-item").style.opacity = 1;
     });
+
     nav.addEventListener("mouseout", (e) => {
       if (e.target.closest(".nav-item"))
-        e.target.closest(".nav-item").style.opacity = 0.6;
+        e.target.closest(".nav-item").style.opacity = 0.7;
     });
   }
 };
@@ -149,9 +153,17 @@ const faqFuntion = (faq, blockVal, opacityVal) => {
 };
 
 const main = function () {
-  let currentSlider = 0;
-  windowChange(mobileQuery);
+  let currentSlider = 0,
+    sliderHeight = 0;
+  windowChange();
   mobileQuery.addEventListener("change", windowChange);
+  mobileQuerySecond.addEventListener("change", windowChange);
+  sliderEl.forEach((el) => {
+    let elHeight = Number(window.getComputedStyle(el).height.replace("px", ""));
+    if (sliderHeight < elHeight) sliderHeight = elHeight;
+  });
+
+  sliderRow.style.height = `${sliderHeight}px`;
   typing();
   sliderFunction(currentSlider);
   faqEl.forEach((el, i) => {
